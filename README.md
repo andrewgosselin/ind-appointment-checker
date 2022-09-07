@@ -21,6 +21,9 @@
   <p align="center">
     <img src=".github/screenshots/menu.png">
   </p>
+  <p align="center">
+    <img src=".github/screenshots/readout.png">
+  </p>
   <hr>
   <h3 align="center">Installation</h3>
     Run the following commands.
