@@ -1,0 +1,18 @@
+{
+    "biometrics": {
+        "url": "https://oap.ind.nl/oap/en/#/BIO",
+        "ignored_dates": {
+            "November 2022": [
+                24
+            ]
+        }
+    },
+    "document_pickup": {
+        "url": "https://oap.ind.nl/oap/en/#/doc",
+        "ignored_dates": {
+            "December 2022": [
+                2
+            ]
+        }
+    }
+}
