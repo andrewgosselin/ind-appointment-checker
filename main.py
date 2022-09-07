@@ -36,6 +36,10 @@ smtp_password = os.getenv("SMTP_PASSWORD")
 interval_time = int(os.getenv("INTERVAL")) * 60
 months_out = int(os.getenv("MONTHS_OUT"))
 
+os.system('cls' if os.name=='nt' else 'clear')
+print("\nIND Appointment Watcher")
+print("=============================================")
+
 results = {}
 
 with open('categories.json', 'r') as f:
@@ -45,12 +49,11 @@ try:
     server = smtplib.SMTP(smtp_host, smtp_port)
     server.starttls()
     server.login(smtp_email, smtp_password)
-    print("\nSMTP Login Successful!")
+    print("SMTP Login Successful!")
 except:
     print("\nERROR: SMTP credentials are incorrect.")
     exit()
-
-print("\n")
+print("----------------------------------------")
 categories = categories_json.keys()
 category = enquiries.choose('Choose one of these options: ', categories)
 
@@ -178,15 +181,18 @@ def checkAvailability():
                     else:
                         print(f"\n{month} - NO NEW APPOINTMENTS")
                     results[month] = all_available_days
-                    day_string = ""
-                    for index, day in enumerate(all_available_days):
-                        if index > 0:
-                            day_string += ", "
-                        day_string += str(day)
-                    print(f"- {day_string}  -")
-                    
+                    day_string = "Dates: "
+                    if len(all_available_days) > 0:
+                        for index, day in enumerate(all_available_days):
+                            if index > 0:
+                                day_string += ", "
+                            day_string += str(day)
+                    else:
+                        day_string += " None available."
+                    print(day_string)
                 else:
                     print(f"\n{month} - NO APPOINTMENTS")
+                    print("Dates: None available.")
                     
             print("\n------------------------------------------")
             now = datetime.now()

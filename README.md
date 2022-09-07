@@ -18,6 +18,8 @@
    <br />
   </p>
   <hr>
+  <img src=".github/screenshots/menu.png">
+  <hr>
   <h3 align="center">Installation</h3>
     Run the following commands.
   <p align="center">
