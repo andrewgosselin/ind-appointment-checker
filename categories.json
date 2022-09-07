@@ -1,18 +1,18 @@
 {
     "biometrics": {
         "url": "https://oap.ind.nl/oap/en/#/BIO",
-        "ignored_dates": {
-            "November 2022": [
-                24
-            ]
-        }
+        "ignored_dates": {}
     },
     "document_pickup": {
         "url": "https://oap.ind.nl/oap/en/#/doc",
-        "ignored_dates": {
-            "December 2022": [
-                2
-            ]
-        }
+        "ignored_dates": {}
+    },
+    "residence_endorcement": {
+        "url": "https://oap.ind.nl/oap/en/#/VAA",
+        "ignored_dates": {}
+    },
+    "return_visa": {
+        "url": "https://oap.ind.nl/oap/en/#/TKV",
+        "ignored_dates": {}
     }
 }
