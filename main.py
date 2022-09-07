@@ -22,6 +22,8 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import enquiries
 import json
+from datetime import datetime
+from time import gmtime, strftime
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -43,11 +45,12 @@ try:
     server = smtplib.SMTP(smtp_host, smtp_port)
     server.starttls()
     server.login(smtp_email, smtp_password)
-    print("\nLogin Successful!")
+    print("\nSMTP Login Successful!")
 except:
     print("\nERROR: SMTP credentials are incorrect.")
     exit()
 
+print("\n")
 categories = categories_json.keys()
 category = enquiries.choose('Choose one of these options: ', categories)
 
@@ -90,7 +93,6 @@ def checkAvailability():
     print("\n============================================")
     with open('categories.json', 'r') as f:
         categories_json = json.load(f)
-        print("\nChecking Availability...")
         options = Options()
         options.add_argument('--headless')
         options.add_argument('--no-sandbox')
@@ -186,6 +188,9 @@ def checkAvailability():
                 else:
                     print(f"\n{month} - NO APPOINTMENTS")
                     
+            print("\n------------------------------------------")
+            now = datetime.now()
+            print("\nLast checked: ", now.strftime("%d/%m/%Y %H:%M:%S"), datetime.now().astimezone().tzname())
             if len(results.keys()) > 0 and new:
                 sendEmail(category, results)
         finally:
