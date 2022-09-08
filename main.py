@@ -35,7 +35,7 @@ smtp_port = int(os.getenv("SMTP_PORT"))
 smtp_email = os.getenv("SMTP_EMAIL")
 smtp_password = os.getenv("SMTP_PASSWORD")
 interval_time = int(os.getenv("INTERVAL")) * 60
-months_out = int(os.getenv("MONTHS_OUT"))
+# months_out = int(os.getenv("MONTHS_OUT"))
 
 os.system('cls' if os.name=='nt' else 'clear')
 print("\nIND Appointment Watcher")
@@ -57,6 +57,8 @@ except:
 print("----------------------------------------")
 categories = categories_json.keys()
 category = enquiries.choose('Choose one of these options: ', categories)
+
+months_out = int(input("How many months out would you like to scan? "))
 
 def loop():
     checkAvailability()
@@ -120,7 +122,7 @@ def checkAvailability():
             for x in range(months_out):
                 if(x > 0):
                     next_element[0].click()
-                    time.sleep(3)
+                    time.sleep(1)
                 month = month_element[0].text
                 all_days = {}
                 day_elements = driver.find_elements(By.XPATH, "//td[@role='gridcell']")
