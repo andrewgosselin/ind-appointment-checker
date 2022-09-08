@@ -24,6 +24,7 @@ import enquiries
 import json
 from datetime import datetime
 from time import gmtime, strftime
+import time
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -68,14 +69,14 @@ def sendEmail(category, results):
     html = open("email.html").read()
     text = ""
 
-    for month in results.keys():
+    for month_key in results.keys():
         text += f"""
             <div>
-                <h3>{month}</h2>
+                <h3>{month_key}</h2>
                 <div>
         """
 
-        text += ", ".join(map(str, results[month]))
+        text += ", ".join(map(str, results[month_key]))
             
         text += "</div></div>"
 
@@ -119,6 +120,7 @@ def checkAvailability():
             for x in range(months_out):
                 if(x > 0):
                     next_element[0].click()
+                    time.sleep(3)
                 month = month_element[0].text
                 all_days = {}
                 day_elements = driver.find_elements(By.XPATH, "//td[@role='gridcell']")
@@ -131,6 +133,7 @@ def checkAvailability():
                     if in_month == False and day_number == 1:
                         in_month = True
                     if in_month:
+                        print(int(day.text), ("available" in button.get_attribute("class")))
                         all_days[day_number] = ("available" in button.get_attribute("class"))
                         if all_days[day_number] == True:
                             days_available = True
