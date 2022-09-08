@@ -133,7 +133,6 @@ def checkAvailability():
                     if in_month == False and day_number == 1:
                         in_month = True
                     if in_month:
-                        print(int(day.text), ("available" in button.get_attribute("class")))
                         all_days[day_number] = ("available" in button.get_attribute("class"))
                         if all_days[day_number] == True:
                             days_available = True
