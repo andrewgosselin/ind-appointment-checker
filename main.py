@@ -171,9 +171,9 @@ def checkAvailability():
                         json.dump(cached_day_object, fp, indent=2)
                     
                     if new:
-                        print(f"\n{month} - NEW APPOINTMENTS AVAILABLE")
+                        print(f"\n{month} - APPOINTMENTS CHANGES [O]")
                     else:
-                        print(f"\n{month} - NO NEW APPOINTMENTS")
+                        print(f"\n{month} - NO UPDATES [X]")
 
                     results[month] = all_available_days
                     day_string = "Dates: "
@@ -186,7 +186,7 @@ def checkAvailability():
                         day_string += " None available."
                     print(day_string)
                 else:
-                    print(f"\n{month} - NO APPOINTMENTS")
+                    print(f"\n{month} - NO APPOINTMENTS [X]")
                     print("Dates: None available.")
 
             
