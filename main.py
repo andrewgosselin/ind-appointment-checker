@@ -108,6 +108,7 @@ def checkAvailability():
         cached_days = []
 
         try:
+            new = False
             WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.ID, "desk")))
             driver.find_element(By.ID, "desk").click()
@@ -124,7 +125,6 @@ def checkAvailability():
                 in_month = False
                 last_day = 30 if month.split()[0] in ["April", "June", "September", "November"] else 31
                 days_available = False
-                new = False
                 for day in day_elements:
                     day_number = int(day.text)
                     button = day.find_element(By.TAG_NAME, "button")
@@ -159,31 +159,22 @@ def checkAvailability():
                     for day in all_days.keys():
                         if all_days[day]:
                             all_available_days.append(day)
-                            ignored_date_months = categories_json[category]["ignored_dates"]
-                            if not month not in ignored_date_months.keys():
-                                ignored_days = ignored_date_months[month]
-                            else:
-                                ignored_days = []
-                            if not day in ignored_days:
-                                if not day in cached_days:
-                                    new_days.append(day)
-                                    new = True
-                                    cached_days.append(day)
-                                else:
-                                    old_days.append(day) 
-                        
-                    for index, day in enumerate(cached_days):
-                        if not day in all_available_days:
-                            cached_days.remove(day)
-                    cached_day_object[category][month] = cached_days
+                    
+                    if category not in cached_day_object:
+                        cached_day_object[category] = {}
+                    if month not in cached_day_object[category] or cached_day_object[category][month] != all_available_days:
+                        new = True
+                    
+                    cached_day_object[category][month] = all_available_days
 
                     with open('cache.json', 'w') as fp:
                         json.dump(cached_day_object, fp, indent=2)
-
-                    if len(new_days) > 0:
+                    
+                    if new:
                         print(f"\n{month} - NEW APPOINTMENTS AVAILABLE")
                     else:
                         print(f"\n{month} - NO NEW APPOINTMENTS")
+
                     results[month] = all_available_days
                     day_string = "Dates: "
                     if len(all_available_days) > 0:
@@ -197,11 +188,13 @@ def checkAvailability():
                 else:
                     print(f"\n{month} - NO APPOINTMENTS")
                     print("Dates: None available.")
-                    
+
+            
+
             print("\n------------------------------------------")
             now = datetime.now()
             print("\nLast checked: ", now.strftime("%d/%m/%Y %H:%M:%S"), datetime.now().astimezone().tzname())
-            if len(results.keys()) > 0 and new:
+            if new:
                 sendEmail(category, results)
         finally:
             driver.quit()
