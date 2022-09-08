@@ -84,10 +84,12 @@ def sendEmail(category, results):
     msg['To'] = smtp_email
     msg['Subject'] = f"[IND] {category} - New Appointments Available"
 
+    link = categories_json[category]["url"]
+
     server = smtplib.SMTP(smtp_host, smtp_port)
     server.starttls()
     server.login(smtp_email, smtp_password)
-    server.sendmail(smtp_email, smtp_email, msg.as_string().replace("(content)", text))
+    server.sendmail(smtp_email, smtp_email, msg.as_string().replace("(content)", text).replace("(link)", link))
     print("\n----------------------------------")
     print("\nEmail sent with new appointments.")
 
@@ -102,6 +104,8 @@ def checkAvailability():
         options.add_argument('--disable-dev-shm-usage')
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
         driver.get(categories_json[category]["url"])
+
+        cached_days = []
 
         try:
             WebDriverWait(driver, 10).until(
