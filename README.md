@@ -4,6 +4,8 @@
     <img src="https://cyrexag.com/assets/branding/logo.png" alt="Logo" width="80" height="80">
   </a>
 
+  <h2 align="center"><b>Probably dont use this! An API was released that makes it so you dont have to scrape and its much more efficient!</b></h2>
+
   <h3 align="center">IND Appointment Watcher</h3>
 
   <p align="center">
